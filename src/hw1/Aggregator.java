@@ -10,10 +10,15 @@ import java.util.Iterator;
  *
  */
 public class Aggregator {
+	private AggregateOperator operator;
+	private boolean group;
+	private TupleDesc td;
 
 	public Aggregator(AggregateOperator o, boolean groupBy, TupleDesc td) {
 		//your code here
-
+		operator = o;
+		group = groupBy;
+		this.td = td;
 	}
 
 	/**

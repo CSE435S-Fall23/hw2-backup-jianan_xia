@@ -19,6 +19,8 @@ public class TupleDesc {
      */
     public TupleDesc(Type[] typeAr, String[] fieldAr) {
     	//your code here
+        this.types = typeAr;
+        this.fields = fieldAr;
     }
 
     /**
@@ -26,7 +28,8 @@ public class TupleDesc {
      */
     public int numFields() {
         //your code here
-    	return 0;
+    	return types.length;
+//    	return 0;
     }
 
     /**
@@ -37,8 +40,12 @@ public class TupleDesc {
      * @throws NoSuchElementException if i is not a valid field reference.
      */
     public String getFieldName(int i) throws NoSuchElementException {
-        //your code here
-    	return null;
+//        your code here
+    	if (i < 0 || i >= fields.length) {
+            throw new NoSuchElementException("Invalid field reference.");
+        }
+        return fields[i];
+//    	return null;
     }
 
     /**
@@ -50,7 +57,13 @@ public class TupleDesc {
      */
     public int nameToId(String name) throws NoSuchElementException {
         //your code here
-    	return 0;
+    	for (int i = 0; i < fields.length; i++) {
+            if (name.equals(fields[i])) {
+                return i;
+            }
+        }
+        throw new NoSuchElementException("Field with name " + name + " not found.");
+//    	return 0;
     }
 
     /**
@@ -62,7 +75,11 @@ public class TupleDesc {
      */
     public Type getType(int i) throws NoSuchElementException {
         //your code here
-    	return null;
+    	if (i < 0 || i >= types.length) {
+            throw new NoSuchElementException("Invalid field reference.");
+        }
+        return types[i];
+//    	return null;
     }
 
     /**
@@ -71,7 +88,16 @@ public class TupleDesc {
      */
     public int getSize() {
     	//your code here
-    	return 0;
+    	int size = 0;
+        for (int i = 0; i < types.length; i++) {
+            if (types[i].equals(Type.INT)) {
+                size += 4;
+            } else if (types[i].equals(Type.STRING)) {
+                size += 129;
+            }
+        }
+        return size;
+//    	return 0;
     }
 
     /**
@@ -84,7 +110,23 @@ public class TupleDesc {
      */
     public boolean equals(Object o) {
     	//your code here
-    	return false;
+    	if (o == this) {
+            return true;
+        }
+        if (!(o instanceof TupleDesc)) {
+            return false;
+        }
+        TupleDesc other = (TupleDesc) o;
+        if (other.types.length != this.types.length) {
+            return false;
+        }
+        for (int i = 0; i < this.types.length; i++) {
+            if (other.types[i] != this.types[i]) {
+                return false;
+            }
+        }
+        return true;
+//    	return false;
     }
     
 
@@ -102,6 +144,14 @@ public class TupleDesc {
      */
     public String toString() {
         //your code here
-    	return "";
+    	StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < types.length; i++) {
+            sb.append(types[i] + "(" + (fields[i] != null ? fields[i] : "null") + ")");
+            if (i < types.length - 1) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
+//    	return "";
     }
 }

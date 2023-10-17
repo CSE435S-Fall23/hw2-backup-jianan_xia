@@ -11,17 +11,25 @@ import java.util.HashMap;
  */
 public class Tuple {
 	
+	 private TupleDesc tupleDesc; 
+	 private Field[] fields;
+	 private int pid;
+	 private int id;
+	
 	/**
 	 * Creates a new tuple with the given description
 	 * @param t the schema for this tuple
 	 */
 	public Tuple(TupleDesc t) {
 		//your code here
+		tupleDesc = t;
+        fields = new Field[t.numFields()];
 	}
 	
 	public TupleDesc getDesc() {
 		//your code here
-		return null;
+		return tupleDesc;
+//		return null;
 	}
 	
 	/**
@@ -30,11 +38,13 @@ public class Tuple {
 	 */
 	public int getPid() {
 		//your code here
-		return 0;
+		return pid;
+//		return 0;
 	}
 
 	public void setPid(int pid) {
 		//your code here
+		this.pid = pid;
 	}
 
 	/**
@@ -43,15 +53,18 @@ public class Tuple {
 	 */
 	public int getId() {
 		//your code here
-		return 0;
+		return id;
+//		return 0;
 	}
 
 	public void setId(int id) {
 		//your code here
+		this.pid = id;
 	}
 	
 	public void setDesc(TupleDesc td) {
 		//your code here;
+		tupleDesc = td;
 	}
 	
 	/**
@@ -61,11 +74,13 @@ public class Tuple {
 	 */
 	public void setField(int i, Field v) {
 		//your code here
+		fields[i] = v;
 	}
 	
 	public Field getField(int i) {
 		//your code here
-		return null;
+		return fields[i];
+//		return null;
 	}
 	
 	/**
@@ -75,7 +90,15 @@ public class Tuple {
 	 */
 	public String toString() {
 		//your code here
-		return "";
+		StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < fields.length; i++) {
+            sb.append(fields[i].toString());
+            if (i < fields.length - 1) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
+//		return "";
 	}
 }
 	

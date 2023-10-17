@@ -16,12 +16,31 @@ import java.util.*;
 
 public class Catalog {
 	
+	private class TableInfo {
+		private HeapFile file;
+		private String name;
+		private String pkeyField;
+		
+		public TableInfo(HeapFile file, String name, String pkeyField) {
+			this.file = file;
+			this.name = name;
+			this.pkeyField = pkeyField;
+		}
+	}
+	
+	private Map<Integer, TableInfo> tableIdToInfo;
+    private Map<String, Integer> tableNameToId;
+    
+    
+	
     /**
      * Constructor.
      * Creates a new, empty catalog.
      */
     public Catalog() {
     	//your code here
+    	tableIdToInfo = new HashMap<>();
+        tableNameToId = new HashMap<>();
     }
 
     /**
@@ -34,6 +53,10 @@ public class Catalog {
      */
     public void addTable(HeapFile file, String name, String pkeyField) {
     	//your code here
+    	int tableId = file.getId();
+        TableInfo tableInfo = new TableInfo(file, name, pkeyField);
+        tableIdToInfo.put(tableId, tableInfo);
+        tableNameToId.put(name, tableId);
     }
 
     public void addTable(HeapFile file, String name) {
@@ -46,7 +69,12 @@ public class Catalog {
      */
     public int getTableId(String name) {
     	//your code here
-    	return 0;
+    	if (tableNameToId.containsKey(name)) {
+            return tableNameToId.get(name);
+        } else {
+            throw new NoSuchElementException("Table not found: " + name);
+        }
+//    	return 0;
     }
 
     /**
@@ -56,7 +84,12 @@ public class Catalog {
      */
     public TupleDesc getTupleDesc(int tableid) throws NoSuchElementException {
     	//your code here
-    	return null;
+    	if (tableIdToInfo.containsKey(tableid)) {
+            return tableIdToInfo.get(tableid).file.getTupleDesc();
+        } else {
+            throw new NoSuchElementException("Table not found with ID: " + tableid);
+        }
+//    	return null;
     }
 
     /**
@@ -67,27 +100,45 @@ public class Catalog {
      */
     public HeapFile getDbFile(int tableid) throws NoSuchElementException {
     	//your code here
-    	return null;
+    	if (tableIdToInfo.containsKey(tableid)) {
+            return tableIdToInfo.get(tableid).file;
+        } else {
+            throw new NoSuchElementException("Table not found with ID: " + tableid);
+        }
+//    	return null;
     }
 
     /** Delete all tables from the catalog */
     public void clear() {
     	//your code here
+    	tableIdToInfo.clear();
+        tableNameToId.clear();
     }
 
     public String getPrimaryKey(int tableid) {
     	//your code here
-    	return null;
+    	if (tableIdToInfo.containsKey(tableid)) {
+            return tableIdToInfo.get(tableid).pkeyField;
+        } else {
+            throw new NoSuchElementException("Table not found with ID: " + tableid);
+        }
+//    	return null;
     }
 
     public Iterator<Integer> tableIdIterator() {
     	//your code here
-    	return null;
+    	return tableIdToInfo.keySet().iterator();
+//    	return null;
     }
 
     public String getTableName(int id) {
     	//your code here
-    	return null;
+    	 if (tableIdToInfo.containsKey(id)) {
+             return tableIdToInfo.get(id).name;
+         } else {
+             throw new NoSuchElementException("Table not found with ID: " + id);
+         }
+//    	return null;
     }
     
     /**
