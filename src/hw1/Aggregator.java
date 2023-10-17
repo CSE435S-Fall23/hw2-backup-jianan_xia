@@ -1,3 +1,7 @@
+// Please see aggregation in Relation class. I put the functions there. 
+// And professor said it is okay to write codes there and leave a note here as a reminder for grading.
+// Refer to piazza post @105, I asked professor in class and closed that post myself.
+
 package hw1;
 
 import java.util.ArrayList;

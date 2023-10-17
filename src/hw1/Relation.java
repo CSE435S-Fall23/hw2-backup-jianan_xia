@@ -229,7 +229,21 @@ public class Relation {
 	                    if (value < current) {
 	                        aggregatedData.put(groupField, value);
 	                    }
+	                } 
+	            }
+	        }
+	        
+	        if (op == AggregateOperator.AVG) {
+	            for (Field groupField : aggregatedData.keySet()) {
+	                int total = aggregatedData.get(groupField);
+	                int count = 0; 
+	                for (Tuple tuple : this.tuples) {
+	                    Field currentGroupField = tuple.getField(0);
+	                    if (currentGroupField.equals(groupField)) {
+	                        count++;
+	                    }
 	                }
+	                aggregatedData.put(groupField, total / count);
 	            }
 	        }
 
