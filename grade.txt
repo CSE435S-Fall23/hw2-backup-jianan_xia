@@ -1,0 +1,10 @@
+Relation: 55/55
+Aggregate: 0/10
+	Not implemented
+	
+Query: 25/30
+	No AS
+	
+Unit Tests: 5/5
+
+85/100 
